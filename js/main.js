@@ -13,14 +13,14 @@ app.main = (function(){
 		/*------------- MATTER OBJECTS -------------*/
 		// ALIASES
 		var Engine = Matter.Engine,
-		    Render = Matter.Render,
-		    World = Matter.World,
-		    Bodies = Matter.Bodies,
+			Render = Matter.Render,
+			World = Matter.World,
+			Bodies = Matter.Bodies,
 			Events = Matter.Events,
 			MouseConstraint = Matter.MouseConstraint,
-			// Mouse = Matter.Mouse,
 			Body = Matter.Body,
-			Vertices = Matter.Vertices
+			Vertices = Matter.Vertices,
+			Mouse = Matter.Mouse
 			;
 
 		// SETUP WORLD
@@ -32,38 +32,42 @@ app.main = (function(){
 		var width = window.innerWidth;
 		var height = window.innerHeight;
 		var render = Render.create({
-		    element: container,
-		    engine: engine,
-		    options: {
-		    	wireframes: false,
-		    	showAngleIndicator: false,
-		    	width: width,
-		    	height: height,
-		    	background: "black"
-		    }
+			element: container,
+			engine: engine,
+			options: {
+				wireframes: false,
+				showAngleIndicator: false,
+				width: width,
+				height: height,
+				background: "black"
+			}
 		});
 		// console.log(render);
 
-		// add a mouse controlled constraint
-        var mouseConstraint = MouseConstraint.create(engine, {
-            element: render.canvas,
-            constraint: {
-            	render: {
-            		visible: false
-            	}
-            }
-        });
+		// Add a mouse controlled constraint
+		var mouseConstraint = MouseConstraint.create(engine, {
+			element: render.canvas,
+			constraint: {
+				// render: {
+				// 	visible: false
+				// }
+			}
+		});
+
+		// Add a mouse
+		var mouse = Mouse.create(render.canvas);
+
 		engine.world.gravity.y = 0;
+		// engine.world.gravity.y = 0.05;
 
 		var centerX = width/2;
 		var centerY = height/2;
-		var boxA = Bodies.rectangle(400, 200, 80, 80, { isStatic: false });
-		Body.rotate(boxA, 30);
-		var boxB = Bodies.rectangle(450, 300, 80, 80, { isStatic: false });
+		var user = Bodies.circle(400, 400, 20);
 
 		
 		// LETTERS
 		var letterOptions = {
+			mass: 1,
 			render: {
 				fillStyle: 'white',
 				strokeStyle: 'white',
@@ -97,6 +101,7 @@ app.main = (function(){
 
 
 		];
+		console.log(letters[0]);
 
 
 		// WALLS
@@ -111,16 +116,113 @@ app.main = (function(){
 		// add all of the bodies to the world
 		World.add(engine.world, letters);
 		World.add(engine.world, mouseConstraint);
-		World.add(engine.world, [boxA, boxB]);
+		World.add(engine.world, user);
 		World.add(engine.world, walls);
 
-		
-		// console.log(mouseConstraint);
-		// console.log(boxA);
+
+		var pMouse = {x: 0, y: 0};
+		var xOffset, yOffset;
+		Events.on(engine, 'tick', function(event) {
+			Body.setPosition(user, {x: mouse.position.x, y: mouse.position.y})
+			xOffset = -(mouse.position.x - pMouse.x)/1000;
+			yOffset = -(mouse.position.y - pMouse.y)/1000;
+			// Body.applyForce(user,
+			// 	{ x: mouse.position.x, y: mouse.position.y },
+			// 	// { x: 1, y: 1 }
+			// 	{ x: xOffset, y: yOffset }
+			// );
+			pMouse.x = mouse.position.x;
+			pMouse.y = mouse.position.y;
+			// console.log(xOffset);
+		});
+
+// {
+//             x: 0,
+//             y: 0
+//         }, {
+//             x: force.x / 10000,
+//             y: force.y / 10000
+//         });
 
 		// FOLLOW MOUSE
 		Events.on(mouseConstraint, "mousemove", function(event){
-			Body.setPosition(boxA, mouseConstraint.constraint.pointA);
+			// console.log(mouse);
+			// Body.applyForce(user, )
+			// console.log(event);
+			// console.log(mouseConstraint.body);
+
+			// mouseConstraint.constraint.pointA = mouse.position;
+			// mouseConstraint.constraint.pointB = user.position;
+			// mouseConstraint.body = user;
+			
+
+			// mouseConstraint.constraint.bodyB = mouseConstraint.body = user;
+			// mouseConstraint.constraint.pointB = { x: mouse.position.x - user.position.x, y: mouse.position.y - user.position.y };
+			// mouseConstraint.constraint.angleB = user.angle;
+
+			// Body.setPosition(user, mouseConstraint.constraint.pointA);
+			// Body.setAngle(user, mouseConstraint.constraint.angleA);
+			// mouseConstraint.pointA = user.position;
+			// console.log(mouseConstraint.constraint);
+
+	        // if (mouse.button === 0) {
+	        // 	// Not dragging...
+	        //     if (!mouseConstraint.constraint.bodyB) {
+	        //     	// console.log('yeah');
+	        //         for (var i = 0; i < bodies.length; i++) {
+	        //             body = bodies[i];
+	        //             if (Bounds.contains(body.bounds, mouse.position) 
+	        //                     && Detector.canCollide(body.collisionFilter, mouseConstraint.collisionFilter)) {
+	        //                 for (var j = body.parts.length > 1 ? 1 : 0; j < body.parts.length; j++) {
+	        //                     var part = body.parts[j];
+	        //                     if (Vertices.contains(part.vertices, mouse.position)) {
+	        //                         constraint.pointA = mouse.position;
+	        //                         constraint.bodyB = mouseConstraint.body = body;
+	        //                         constraint.pointB = { x: mouse.position.x - body.position.x, y: mouse.position.y - body.position.y };
+	        //                         constraint.angleB = body.angle;
+
+	        //                         Sleeping.set(body, false);
+	        //                         Events.trigger(mouseConstraint, 'startdrag', { mouse: mouse, body: body });
+
+	        //                         break;
+	        //                     }
+	        //                 }
+	        //             }
+	        //         }
+	        //     // } else {
+	        //     //     Sleeping.set(constraint.bodyB, false);
+	        //     //     constraint.pointA = mouse.position;
+	        //     // }
+	        // // } else {
+	        //     // constraint.bodyB = mouseConstraint.body = null;
+	        //     // constraint.pointB = null;
+
+	        //     // if (body) Events.trigger(mouseConstraint, 'enddrag', { mouse: mouse, body: body });
+	        // 	}
+	        // }
+
+		});
+
+		// // ROTATE ON COLLISION
+		Events.on(engine, 'collisionStart', function(event) {
+
+			var pairs = event.pairs;
+
+			for (var i = 0; i < pairs.length; i++) {
+
+				var pair = pairs[i];
+				// console.log(pair);
+
+				// detect collision with user
+				if(pair.bodyA.id === user.id || pair.bodyB.id === user.id){
+					var otherObj = (pair.bodyA.id === user.id) ? (pair.bodyB) : (pair.bodyA);
+					Body.applyForce(otherObj,
+						{ x: mouse.position.x, y: mouse.position.y },
+						// { x: 1, y: 1 }
+						{ x: xOffset, y: yOffset }
+					);
+				}
+			}
 		});
 
 		// run the engine
