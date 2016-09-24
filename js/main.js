@@ -4,24 +4,7 @@ app.main = (function(){
 
 	console.log('Loading app.');
 
-	function loadSvg(){
-		var httpRequest = new XMLHttpRequest();
-		httpRequest.onreadystatechange = function (data) {
-			console.log(data);
-		    if (this.readyState == 4 && this.status == 200) {
-				console.log("Loaded");
-				var div = document.createElement("div");
-				div.innerHTML = data.currentTarget.responseText;
-				document.body.insertBefore(div, document.body.childNodes[0]);
-				matterSetup(data);
-			}
-		}
-		httpRequest.open('GET', "img/temer_2-01.svg");
-		httpRequest.send();
-	}
-
-	function matterSetup(data){
-		console.log(data);
+	function matterSetup(){
 
 		var container = document.getElementById('canvas-container');
 		// console.log(container);
@@ -72,8 +55,32 @@ app.main = (function(){
         });
 		engine.world.gravity.y = 0;
 
+		var centerX = width/2;
+		var centerY = height/2;
 		var boxA = Bodies.rectangle(400, 200, 80, 80, { isStatic: false });
+		Body.rotate(boxA, 30);
 		var boxB = Bodies.rectangle(450, 300, 80, 80, { isStatic: false });
+
+		var letters = [
+			Bodies.rectangle(centerX - 427, centerY - 89, 170, 35),	// T
+			Bodies.rectangle(centerX - 427, centerY + 14, 35, 170),
+			Bodies.rectangle(centerX - 230, centerY - 89, 155, 35),	// E
+			Bodies.rectangle(centerX - 212, centerY - 4, 120, 35),
+			Bodies.rectangle(centerX - 230, centerY + 82, 155, 35),
+			Bodies.rectangle(centerX - 290, centerY - 4, 35, 135),
+
+			Bodies.rectangle(centerX + 229, centerY - 89, 155, 35),	// E
+			Bodies.rectangle(centerX + 247, centerY - 4, 120, 35),
+			Bodies.rectangle(centerX + 229, centerY + 82, 155, 35),
+			Bodies.rectangle(centerX + 169, centerY - 4, 35, 135),
+
+			Bodies.rectangle(centerX + 375, centerY - 4, 35, 205),	// R
+			Bodies.rectangle(centerX + 435, centerY - 89, 85, 35),
+			Bodies.rectangle(centerX + 435, centerY - 4, 85, 35),
+			Bodies.rectangle(centerX + 495, centerY - 46, 35, 120),
+
+
+		];
 
 		var wallWidth = 100;
 		var walls = [
@@ -82,39 +89,9 @@ app.main = (function(){
 			Bodies.rectangle(width/2, -wallWidth, width, wallWidth, { isStatic: true }),
 			Bodies.rectangle(width/2, height+wallWidth, width, wallWidth, { isStatic: true })
 		];
-		// var ground = 
-
-
-        var vertexSets = [],
-        color = '#556270';
-
-        var svgs = document.getElementsByTagName("svg");
-        console.log(svgs);
-        for(var i = 0; i < svgs.length; i++){
-        	var paths = svgs[i].getElementsByTagName("path");
-        	// console.log(paths);
-        	for(var j = 0; j < svgs.length; j++){
-        		var points = Svg.pathToVertices(paths[j], 30);
-        		vertexSets.push(points);
-        	}
-        }
-        
-
-
-
-        // $(data).find('path').each(function(i, path) {
-        //     var points = Svg.pathToVertices(path, 30);
-        //     vertexSets.push(Vertices.scale(points, 0.4, 0.4));
-        // });
-
-        World.add(world, Bodies.fromVertices(0, 0, vertexSets, {
-            render: {
-                fillStyle: color,
-                strokeStyle: color
-            }
-        }, true));
 
 		// add all of the bodies to the world
+		World.add(engine.world, letters);
 		World.add(engine.world, mouseConstraint);
 		World.add(engine.world, [boxA, boxB]);
 		World.add(engine.world, walls);
@@ -137,8 +114,7 @@ app.main = (function(){
 	}
 
 	var init = function(){
-		loadSvg();
-		// matterSetup();
+		matterSetup();
 	};
 
 	return {
