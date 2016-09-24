@@ -43,7 +43,12 @@ app.main = (function(){
 		});
 		// console.log(render);
 
-		var user = Bodies.circle(400, 400, 20);		
+		var user = Bodies.circle(0, 0, 20, {
+			// render: {
+			// 	fillStyle: "rgba(0, 0, 0, 0)",
+			// 	strokeStyle: "rgba(0, 0, 0, 0)"
+			// }
+		});		
 
 		// Add a mouse controlled constraint
 		var mouseConstraint = MouseConstraint.create(engine, {
@@ -123,7 +128,12 @@ app.main = (function(){
 		Engine.run(engine);
 
 		// run the renderer
-		Render.run(render);	
+		Render.run(render);
+
+		Body.setPosition(user, {
+			x: mouseConstraint.mouse.position.x,
+			y: mouseConstraint.mouse.position.y
+		});
 	
 	}
 
