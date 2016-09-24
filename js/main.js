@@ -4,7 +4,24 @@ app.main = (function(){
 
 	console.log('Loading app.');
 
-	function matterSetup(){
+	function loadSvg(){
+		var httpRequest = new XMLHttpRequest();
+		httpRequest.onreadystatechange = function (data) {
+			console.log(data);
+		    if (this.readyState == 4 && this.status == 200) {
+				console.log("Loaded");
+				var div = document.createElement("div");
+				div.innerHTML = data.currentTarget.responseText;
+				document.body.insertBefore(div, document.body.childNodes[0]);
+				matterSetup(data);
+			}
+		}
+		httpRequest.open('GET', "img/temer_2-01.svg");
+		httpRequest.send();
+	}
+
+	function matterSetup(data){
+		console.log(data);
 
 		var container = document.getElementById('canvas-container');
 		// console.log(container);
@@ -19,7 +36,8 @@ app.main = (function(){
 			Events = Matter.Events,
 			MouseConstraint = Matter.MouseConstraint,
 			// Mouse = Matter.Mouse,
-			Body = Matter.Body
+			Body = Matter.Body,
+			Svg = Matter.Svg
 			;
 
 		// SETUP WORLD
@@ -38,7 +56,7 @@ app.main = (function(){
 		    	showAngleIndicator: false,
 		    	width: width,
 		    	height: height,
-		    	background: "black"
+		    	background: "#FACADA"
 		    }
 		});
 		// console.log(render);
@@ -66,6 +84,36 @@ app.main = (function(){
 		];
 		// var ground = 
 
+
+        var vertexSets = [],
+        color = '#556270';
+
+        var svgs = document.getElementsByTagName("svg");
+        console.log(svgs);
+        for(var i = 0; i < svgs.length; i++){
+        	var paths = svgs[i].getElementsByTagName("path");
+        	// console.log(paths);
+        	for(var j = 0; j < svgs.length; j++){
+        		var points = Svg.pathToVertices(paths[j], 30);
+        		vertexSets.push(points);
+        	}
+        }
+        
+
+
+
+        // $(data).find('path').each(function(i, path) {
+        //     var points = Svg.pathToVertices(path, 30);
+        //     vertexSets.push(Vertices.scale(points, 0.4, 0.4));
+        // });
+
+        World.add(world, Bodies.fromVertices(0, 0, vertexSets, {
+            render: {
+                fillStyle: color,
+                strokeStyle: color
+            }
+        }, true));
+
 		// add all of the bodies to the world
 		World.add(engine.world, mouseConstraint);
 		World.add(engine.world, [boxA, boxB]);
@@ -89,7 +137,8 @@ app.main = (function(){
 	}
 
 	var init = function(){
-		matterSetup();
+		loadSvg();
+		// matterSetup();
 	};
 
 	return {
