@@ -125,6 +125,8 @@ app.main = (function(){
 		// run the renderer
 		Render.run(render);
 
+		var canvas = document.getElementsByTagName("canvas")[0];
+
 		// Update the user position so that it doesn't jump from 0, 0
 		var hasStarted = false;
 		Events.on(mouseConstraint, "mousemove", function(event){
@@ -136,6 +138,15 @@ app.main = (function(){
 				});
 				hasStarted = true;
 			}
+
+			// console.log(canvas);
+
+			var dataURL = canvas.toDataURL();
+			var img = document.createElement("img");
+			img.src = dataURL;
+			console.log(img);
+			document.body.appendChild(img);
+
 		});
 	}
 
