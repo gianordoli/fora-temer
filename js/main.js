@@ -38,7 +38,7 @@ app.main = (function(){
 				showAngleIndicator: false,
 				width: width,
 				height: height,
-				background: "rgb(220, 0, 40)"
+				background: "rgb(220, 0, 30)"
 			}
 		});
 		// console.log(render);
