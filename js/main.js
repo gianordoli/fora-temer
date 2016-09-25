@@ -191,7 +191,8 @@ app.main = (function(){
 						{x: letters[i].position.x, y: letters[i].position.y},
 						{x: force.x, y: force.y}
 					);
-				}else{
+				}
+				else{
 					// console.log("static");
 					if(Math.abs(letters[i].angle) % (2*(Math.PI)) > 0.05){
 						// console.log("spinning");
