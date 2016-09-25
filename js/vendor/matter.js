@@ -3857,7 +3857,7 @@ var Bounds = require('../geometry/Bounds');
                 mouse = Mouse.create();
                 Common.log('MouseConstraint.create: options.mouse was undefined, options.element was undefined, may not function as expected', 'warn');
             }
-        }
+        }        
 
         var constraint = Constraint.create({ 
             label: 'Mouse Constraint',

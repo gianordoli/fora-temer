@@ -38,25 +38,26 @@ app.main = (function(){
 				showAngleIndicator: false,
 				width: width,
 				height: height,
-				background: "black"
+				background: "rgb(220, 0, 40)"
 			}
 		});
 		// console.log(render);
 
 		var user = Bodies.circle(0, 0, 20, {
-			// render: {
-			// 	fillStyle: "rgba(0, 0, 0, 0)",
-			// 	strokeStyle: "rgba(0, 0, 0, 0)"
-			// }
+			frictionAir: 1,
+			render: {
+				fillStyle: "rgba(0, 0, 0, 0)",
+				strokeStyle: "rgba(0, 0, 0, 0)"
+			}
 		});		
 
 		// Add a mouse controlled constraint
 		var mouseConstraint = MouseConstraint.create(engine, {
 			element: render.canvas,
 			constraint: {
-				// render: {
-				// 	visible: false
-				// }
+				render: {
+					visible: false
+				}
 			}
 		}, user);
 
@@ -65,12 +66,10 @@ app.main = (function(){
 
 		var centerX = width/2;
 		var centerY = height/2;
-
-
 		
 		// LETTERS
 		var letterOptions = {
-			mass: 1,
+			frictionAir: 0.05,
 			render: {
 				fillStyle: 'white',
 				strokeStyle: 'white',
@@ -118,11 +117,7 @@ app.main = (function(){
 		// add all of the bodies to the world
 		World.add(engine.world, letters);
 		World.add(engine.world, mouseConstraint);
-		World.add(engine.world, user);
 		World.add(engine.world, walls);
-
-		console.log(mouseConstraint);
-
 
 		// run the engine
 		Engine.run(engine);
@@ -130,11 +125,18 @@ app.main = (function(){
 		// run the renderer
 		Render.run(render);
 
-		Body.setPosition(user, {
-			x: mouseConstraint.mouse.position.x,
-			y: mouseConstraint.mouse.position.y
+		// Update the user position so that it doesn't jump from 0, 0
+		var hasStarted = false;
+		Events.on(mouseConstraint, "mousemove", function(event){
+			if(!hasStarted){
+				World.add(engine.world, user);				
+				Body.setPosition(user, {
+					x: mouseConstraint.mouse.position.x,
+					y: mouseConstraint.mouse.position.y
+				});
+				hasStarted = true;
+			}
 		});
-	
 	}
 
 	var init = function(){
