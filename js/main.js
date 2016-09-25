@@ -88,11 +88,6 @@ app.main = (function(){
 			}
 		};
 
-		var initPos = {
-			x: centerX - 427,
-			y: centerY - 89
-		};
-
 		var letters = [
 			Bodies.rectangle(centerX - 427, centerY - 89, 170, 35, letterOptions),	// T
 			Bodies.rectangle(centerX - 427, centerY + 14, 35, 170, letterOptions),
@@ -116,9 +111,15 @@ app.main = (function(){
 			Bodies.rectangle(centerX + 435, centerY - 4, 85, 35, letterOptions),
 			Bodies.rectangle(centerX + 495, centerY - 46, 35, 120, letterOptions),
 			Bodies.fromVertices(centerX + 466, centerY + 57, Vertices.fromPath("0 0 41 0 93 85 52 85"), letterOptions)
-
-
 		];
+
+		var initPos = [];
+		for(var i = 0; i < letters.length; i++){
+			initPos.push({
+				x: letters[i].position.x,
+				y: letters[i].position.y
+			});
+		}
 
 
 		// WALLS
@@ -129,6 +130,7 @@ app.main = (function(){
 			Bodies.rectangle(width/2, -wallWidth, width, wallWidth, { isStatic: true }),
 			Bodies.rectangle(width/2, height+wallWidth, width, wallWidth, { isStatic: true })
 		];
+
 
 		// add all of the bodies to the world
 		World.add(engine.world, letters);
@@ -167,32 +169,35 @@ app.main = (function(){
 
 		Events.on(engine, "tick", function(event){
 
-			var dist = {
-				x: initPos.x - letters[0].position.x,
-				y: initPos.y - letters[0].position.y
-			};
-			// console.log(dist.x, dist.y);
+			for(var i = 0; i < letters.length; i++){
 
-			if(Math.abs(dist.x) > 5 || Math.abs(dist.y) > 5){
-				// console.log("moving");
-				var accel = 0.00001;
-				// var accel = 0.001;
-				var force = {
-					x: dist.x * accel,
-					y: dist.y * accel
+				var dist = {
+					x: initPos[i].x - letters[i].position.x,
+					y: initPos[i].y - letters[i].position.y
 				};
+				// console.log(dist.x, dist.y);
 
-				Body.applyForce(
-					letters[0],
-					{x: letters[0].position.x, y: letters[0].position.y},
-					{x: force.x, y: force.y}
-				);
-			}else{
-				// console.log("static");
-				if(Math.abs(letters[0].angle) % (2*(Math.PI)) > 0.05){
-					// console.log("spinning");
-					var angleDist = - (letters[0].angle)/100;
-					Body.setAngularVelocity(letters[0], angleDist);
+				if(Math.abs(dist.x) > 5 || Math.abs(dist.y) > 5){
+					// console.log("moving");
+					var accel = 0.00001;
+					// var accel = 0.001;
+					var force = {
+						x: dist.x * accel,
+						y: dist.y * accel
+					};
+
+					Body.applyForce(
+						letters[i],
+						{x: letters[i].position.x, y: letters[i].position.y},
+						{x: force.x, y: force.y}
+					);
+				}else{
+					// console.log("static");
+					if(Math.abs(letters[i].angle) % (2*(Math.PI)) > 0.05){
+						// console.log("spinning");
+						var angleDist = - (letters[i].angle)/100;
+						Body.setAngularVelocity(letters[i], angleDist);
+					}
 				}
 			}
 		});
