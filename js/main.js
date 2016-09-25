@@ -43,7 +43,7 @@ app.main = (function(){
 		});
 		// console.log(render);
 
-		var user = Bodies.circle(0, 0, 20, {
+		var user = Bodies.circle(0, 0, 40, {
 			frictionAir: 1,
 			render: {
 				fillStyle: "rgba(0, 0, 0, 0)",
@@ -87,7 +87,7 @@ app.main = (function(){
 
 			Bodies.fromVertices(centerX - 94, centerY + 12, Vertices.fromPath("0 0 0 0 0 205 35 205 35 57 0 0"), letterOptions),		// M
 			Bodies.fromVertices(centerX - 46, centerY - 32, Vertices.fromPath("0 0 41 0 111 113 111 180 0 0"), letterOptions),
-			Bodies.fromVertices(centerX + 46, centerY - 32, Vertices.fromPath("0 180 112 0 71 0 0 113 0 180"), letterOptions),
+			Bodies.fromVertices(centerX + 47, centerY - 32, Vertices.fromPath("0 180 112 0 71 0 0 113 0 180"), letterOptions),
 			Bodies.fromVertices(centerX + 95, centerY + 12, Vertices.fromPath("35 0 0 56 0 205 35 205 35 0 35 0"), letterOptions),
 
 			Bodies.rectangle(centerX + 229, centerY - 89, 155, 35, letterOptions),	// E
