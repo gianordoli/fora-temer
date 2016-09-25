@@ -4,6 +4,17 @@ app.main = (function(){
 
 	console.log('Loading app.');
 
+	function dist(x1, y1, x2, y2){
+		var angle = Math.atan2(y1 - y2, x1 - x2);
+		var dist;
+		if( (y1 - y2) == 0 ){
+			dist = (x1 - x2) / Math.cos( angle );
+		}else{
+			dist = (y1 - y2) / Math.sin( angle );
+		}
+		return dist;
+	};	
+
 	function matterSetup(){
 
 		var container = document.getElementById('canvas-container');
@@ -77,6 +88,11 @@ app.main = (function(){
 			}
 		};
 
+		var initPos = {
+			x: centerX - 427,
+			y: centerY - 89
+		};
+
 		var letters = [
 			Bodies.rectangle(centerX - 427, centerY - 89, 170, 35, letterOptions),	// T
 			Bodies.rectangle(centerX - 427, centerY + 14, 35, 170, letterOptions),
@@ -141,12 +157,29 @@ app.main = (function(){
 
 			// console.log(canvas);
 
-			var dataURL = canvas.toDataURL();
-			var img = document.createElement("img");
-			img.src = dataURL;
-			console.log(img);
-			document.body.appendChild(img);
+			// var dataURL = canvas.toDataURL();
+			// var img = document.createElement("img");
+			// img.src = dataURL;
+			// console.log(img);
+			// document.body.appendChild(img);
 
+		});
+
+		Events.on(engine, "tick", function(event){
+			var distX = (initPos.x - letters[0].position.x)/100000;
+			var distY = (initPos.y - letters[0].position.y)/100000;
+			Body.applyForce(
+				letters[0],
+				{x: letters[0].position.x, y: letters[0].position.y},
+				{x: distX, y: distY}
+			);
+			// Body.setPosition(letters[0], {x: initPos.x, y: initPos.y});
+			// Body.setAngle(letters[0], Math.PI/4);
+			// console.log(letters[0].angle % (2*(Math.PI)));
+			// console.log(letters[0].angle);
+			var angleDist = - (letters[0].angle)/1000000000;
+			// Body.setAngle(letters[0], angleDist)
+			Body.setAngularVelocity(letters[0], angleDist)
 		});
 	}
 
