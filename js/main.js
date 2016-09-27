@@ -99,16 +99,11 @@ app.main = (function(){
 			Bodies.rectangle(centerX + 6.54*un,	centerY + 2.34*un,	4.43*un,	1*un,		letterOptions),
 			Bodies.rectangle(centerX + 4.83*un,	centerY - 0.11*un,	1*un,		3.86*un,	letterOptions),
 
-			// Bodies.rectangle(centerX + 229, centerY - 2.5*un, 4.4*un, 1*un, letterOptions),	// E
-			// Bodies.rectangle(centerX + 247, centerY - 4, 120, 1*un, letterOptions),
-			// Bodies.rectangle(centerX + 229, centerY + 82, 4.4*un, 1*un, letterOptions),
-			// Bodies.rectangle(centerX + 169, centerY - 4, 1*un, 135, letterOptions),
-
-			// Bodies.rectangle(centerX + 375, centerY - 4, 1*un, 205, letterOptions),	// R
-			// Bodies.rectangle(centerX + 435, centerY - 2.5*un, 85, 1*un, letterOptions),
-			// Bodies.rectangle(centerX + 435, centerY - 4, 85, 1*un, letterOptions),
-			// Bodies.rectangle(centerX + 495, centerY - 46, 1*un, 120, letterOptions),
-			// Bodies.fromVertices(centerX + 466, centerY + 57, Vertices.fromPath("0 0 41 0 93 85 52 85"), letterOptions)
+			Bodies.rectangle(centerX + 10.71*un,	centerY - 0.11*un,	1*un,		5.86*un,	letterOptions),	// R
+			Bodies.rectangle(centerX + 12.43*un,	centerY - 2.53*un,	2.43*un,	1*un,		letterOptions),
+			Bodies.rectangle(centerX + 12.43*un,	centerY - 0.11*un,	2.43*un,	1*un,		letterOptions),
+			Bodies.rectangle(centerX + 14.14*un,	centerY - 1.33*un,	1*un,		3.42*un,	letterOptions),
+			Bodies.fromVertices(centerX + 13.31*un, centerY + 1.61*un,	Vertices.scale(Vertices.fromPath("0 0 41 0 93 85 52 85"), un/35, un/35), letterOptions)
 		];
 
 		var initPos = [];
