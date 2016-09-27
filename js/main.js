@@ -80,12 +80,21 @@ app.main = (function(){
 		};
 
 		var letters = [
-			Bodies.rectangle(centerX - 12.2*un,	centerY - 2.5*un,	4.9*un,	1*un,	letterOptions),	// T
-			Bodies.rectangle(centerX - 12.2*un,	centerY + 0.5*un,	1*un,	4.9*un,	letterOptions),
-			Bodies.rectangle(centerX - 6.6*un,	centerY - 2.5*un,	4.4*un,	1*un,	letterOptions),	// E
-			Bodies.rectangle(centerX - 6*un,	centerY - 0.1*un,	3.4*un,	1*un,	letterOptions),
-			Bodies.rectangle(centerX - 6.6*un,	centerY + 2.3*un,	4.4*un,	1*un,	letterOptions),
-			Bodies.rectangle(centerX - 8.3*un,	centerY - 0.1*un,	1*un,	3.9*un,	letterOptions),
+
+			Bodies.rectangle(centerX - 12.2*un,	centerY - 2.54*un,	4.86*un,	1*un,		letterOptions),	// T
+			Bodies.rectangle(centerX - 12.2*un,	centerY + 0.4*un,	1*un,		4.86*un,	letterOptions),
+
+			Bodies.rectangle(centerX - 6.57*un,	centerY - 2.54*un,	4.43*un,	1*un,		letterOptions),	// E
+			Bodies.rectangle(centerX - 6.06*un,	centerY - 0.11*un,	3.43*un,	1*un,		letterOptions),
+			Bodies.rectangle(centerX - 6.57*un,	centerY + 2.34*un,	4.43*un,	1*un,		letterOptions),
+			Bodies.rectangle(centerX - 8.29*un,	centerY - 0.11*un,	1*un,		3.86*un,	letterOptions),
+
+			// Bodies.rectangle(centerX - 12.2*un,	centerY - 2.5*un,	4.9*un,	1*un,	letterOptions),	// T
+			// Bodies.rectangle(centerX - 12.2*un,	centerY + 0.5*un,	1*un,	4.9*un,	letterOptions),
+			// Bodies.rectangle(centerX - 6.6*un,	centerY - 2.5*un,	4.4*un,	1*un,	letterOptions),	// E
+			// Bodies.rectangle(centerX - 6*un,	centerY - 0.1*un,	3.4*un,	1*un,	letterOptions),
+			// Bodies.rectangle(centerX - 6.6*un,	centerY + 2.3*un,	4.4*un,	1*un,	letterOptions),
+			// Bodies.rectangle(centerX - 8.3*un,	centerY - 0.1*un,	1*un,	3.9*un,	letterOptions),
 
 			// Bodies.fromVertices(centerX - 94, centerY + 12, Vertices.fromPath("0 0 0 0 0 205 35 205 35 57 0 0"), letterOptions),		// M
 			// Bodies.fromVertices(centerX - 46, centerY - 32, Vertices.fromPath("0 0 41 0 111 113 111 180 0 0"), letterOptions),
