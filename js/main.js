@@ -45,7 +45,7 @@ app.main = (function(){
 		});
 		// console.log(render);
 
-		var user = Bodies.circle(0, 0, 40, {
+		var user = Bodies.circle(0, 0, 1.15*un, {
 			frictionAir: 1,
 			render: {
 				fillStyle: "rgba(0, 0, 0, 0)",
@@ -89,17 +89,15 @@ app.main = (function(){
 			Bodies.rectangle(centerX - 6.57*un,	centerY + 2.34*un,	4.43*un,	1*un,		letterOptions),
 			Bodies.rectangle(centerX - 8.29*un,	centerY - 0.11*un,	1*un,		3.86*un,	letterOptions),
 
-			// Bodies.rectangle(centerX - 12.2*un,	centerY - 2.5*un,	4.9*un,	1*un,	letterOptions),	// T
-			// Bodies.rectangle(centerX - 12.2*un,	centerY + 0.5*un,	1*un,	4.9*un,	letterOptions),
-			// Bodies.rectangle(centerX - 6.6*un,	centerY - 2.5*un,	4.4*un,	1*un,	letterOptions),	// E
-			// Bodies.rectangle(centerX - 6*un,	centerY - 0.1*un,	3.4*un,	1*un,	letterOptions),
-			// Bodies.rectangle(centerX - 6.6*un,	centerY + 2.3*un,	4.4*un,	1*un,	letterOptions),
-			// Bodies.rectangle(centerX - 8.3*un,	centerY - 0.1*un,	1*un,	3.9*un,	letterOptions),
-
 			// Bodies.fromVertices(centerX - 94, centerY + 12, Vertices.fromPath("0 0 0 0 0 205 35 205 35 57 0 0"), letterOptions),		// M
 			// Bodies.fromVertices(centerX - 46, centerY - 32, Vertices.fromPath("0 0 41 0 111 113 111 180 0 0"), letterOptions),
 			// Bodies.fromVertices(centerX + 47, centerY - 32, Vertices.fromPath("0 180 112 0 71 0 0 113 0 180"), letterOptions),
 			// Bodies.fromVertices(centerX + 95, centerY + 12, Vertices.fromPath("35 0 0 56 0 205 35 205 35 0 35 0"), letterOptions),
+
+			Bodies.rectangle(centerX + 6.54*un,	centerY - 2.54*un,	4.43*un,	1*un,		letterOptions),	// E
+			Bodies.rectangle(centerX + 7.06*un,	centerY - 0.11*un,	3.43*un,	1*un,		letterOptions),
+			Bodies.rectangle(centerX + 6.54*un,	centerY + 2.34*un,	4.43*un,	1*un,		letterOptions),
+			Bodies.rectangle(centerX + 4.83*un,	centerY - 0.11*un,	1*un,		3.86*un,	letterOptions),
 
 			// Bodies.rectangle(centerX + 229, centerY - 2.5*un, 4.4*un, 1*un, letterOptions),	// E
 			// Bodies.rectangle(centerX + 247, centerY - 4, 120, 1*un, letterOptions),
